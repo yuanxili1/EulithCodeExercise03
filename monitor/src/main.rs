@@ -36,29 +36,42 @@ async fn main() {
     let web3 = web3::Web3::new(transport);
     
     // Create contract instance
-    let contract_address: Address = "0x5fbdb2315678afecb367f032d93f642f64180aa3".parse().unwrap();
+    let contract_address: Address = "0x5fbdb2315678afecb367f032d93f642f64180aa3"
+                                    .parse().unwrap();
     let abi: &[u8] = include_bytes!("../../contracts/abi.json");
     
-    loop {
-        // Create contract instance
-        let contract = Contract::from_json(web3.eth(), contract_address, abi)
-            .unwrap();
-        
-        // Wait for the next interval
-        interval.tick().await;
+    // Clone the web3 instance
+    let web3_clone = web3.clone();
+    
+    // Set the expected state of the contract
+    let expected_state = 262;
 
-        // Call the getMyState function of the contract and retrieve its state
-        let current_state = get_contract_state(contract).await;
+    // Spawn a thread to monitor the state of the contract
+    let join = tokio::spawn(async move{
+        // Monitor the state of the contract
+        loop {
+            // Create contract instance
+            let contract = Contract::from_json(web3_clone.eth(), contract_address, abi)
+                .unwrap();
+            
+            // Wait for the next interval
+            interval.tick().await;
 
-        // Check if the state of the contract satisfies a constraint
-        let expected_state = 262;
-        if current_state == expected_state {
-            println!("The state of the contract satisfies the constraint");
-            println!("The current value is {}", current_state);
-            println!("=====================================");
-            break;
+            // Call the getMyState function of the contract and retrieve its state
+            let current_state = get_contract_state(contract).await;
+
+            // Check if the state of the contract satisfies a constraint
+            if current_state == expected_state {
+                break;
+            }
         }
-    }
+    });
+
+    // Wait for the thread to finish
+    join.await.unwrap();
+    println!("The state of the contract satisfies the constraint");
+    println!("The current value is {}", expected_state);
+    println!("=====================================");
 
     // Reset the state of the contract  
     let contract = Contract::from_json(web3.eth(), contract_address, abi)
