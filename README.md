@@ -34,5 +34,11 @@ npx hardhat node
 npx hardhat run --network localhost scripts/deploy.js
 npx hardhat run --network localhost scripts/mutate.js
 npx hardhat run --network localhost scripts/reset.js
-npx hardhat run --network localhost scripts/query.js
 ```
+
+### Send a query to the contract (Step 2.5)
+```
+node ./scripts/query.js
+```
+
+### Asynchronously monitor the contract in a non-blocking loop (Step 3)
