@@ -42,3 +42,23 @@ node ./scripts/query.js
 ```
 
 ### Asynchronously monitor the contract in a non-blocking loop (Step 3)
+
+#### Install Rust
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo install mini-redis
+mini-redis-server
+```
+
+#### Run monitor scripts
+Open another terminal and run:
+```
+cd ./monitor
+cargo run
+```
+
+Open another terminal and run this command four times,
+you could see the monitor script detected the mutation and shut down the program.
+```
+npx hardhat run --network localhost scripts/mutate.js
+```

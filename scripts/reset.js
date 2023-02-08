@@ -48,11 +48,13 @@ async function main() {
     // ******************************************************
     // Re-deploy the contract
     // This will reset the value of the contract to the initial value
-    formattedTime = await getCurrentTime();
     const initialValue = 256;
     const Contract = await hre.ethers.getContractFactory("mutateInterger");
     contract = await Contract.deploy(initialValue);
     await contract.deployed();
+    
+    // Print the contract address
+    formattedTime = await getCurrentTime();
     console.log(
         `[Deploy] Contract deployed to ${contract.address} at ${formattedTime}`
     );

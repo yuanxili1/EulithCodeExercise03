@@ -10,3 +10,6 @@ artifacts
 
 .idea
 secret.js
+
+#Rust files
+monitor/target
