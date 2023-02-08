@@ -7,9 +7,11 @@ typechain
 #Hardhat files
 cache
 artifacts
+package-lock.json
 
 .idea
 secret.js
 
 #Rust files
 monitor/target
+monitor/Cargo.lock

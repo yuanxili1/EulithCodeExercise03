@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 //
-// Solidity Contract to be deployed on the local blockchain
+// Solidity Contract to be deployed on the Ethereum Blockchain
+// This contract will be deployed on the Ropsten Testnet
 //
 
 pragma solidity ^0.8.17;
@@ -9,20 +10,30 @@ pragma solidity ^0.8.17;
 // increment, decrement, set, and get an integer
 contract mutateInterger{
     uint256 public _integer = 0;
-    
-    function increment() public {
+    uint256 public _originalInteger = 0;
+
+    constructor(uint256 _initialInteger) {
+        _integer = _initialInteger;
+        _originalInteger = _initialInteger;
+    }
+
+    function incrementValue() public {
         _integer++;
     }
     
-    function decrement() public {
+    function decrementValue() public {
         _integer--;
     }
 
-    function setInteger(uint256 _newInteger) public {
+    function setValue(uint256 _newInteger) public {
         _integer = _newInteger;
     }
     
-    function getInteger() public view returns (uint256){
+    function getValue() public view returns (uint256){
         return _integer;
+    }
+
+    function resetValue() public {
+        _integer = _originalInteger;
     }
 }
