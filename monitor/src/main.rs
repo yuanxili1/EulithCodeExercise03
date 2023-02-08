@@ -55,6 +55,7 @@ async fn main() {
         if current_state == expected_state {
             println!("The state of the contract satisfies the constraint");
             println!("The current value is {}", current_state);
+            println!("=====================================");
             break;
         }
     }
