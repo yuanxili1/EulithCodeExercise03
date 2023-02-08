@@ -31,5 +31,8 @@ npx hardhat node
 2. Monitor the results of the action from console
 3. Reset the contract to a neutral state (the state before the action)
 ```
+npx hardhat run --network localhost scripts/deploy.js
+npx hardhat run --network localhost scripts/mutate.js
 npx hardhat run --network localhost scripts/reset.js
+npx hardhat run --network localhost scripts/query.js
 ```
