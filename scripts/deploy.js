@@ -4,8 +4,24 @@
 // Import hardhat
 const hre = require("hardhat");
 
-// TODO: Add a main function
+async function main() {
+    // Record the current timestamp
+    const currentTimestampInSeconds = Math.round(Date.now() / 1000);
 
+    // We get the contract to deploy
+    const initialValue = 256;
+    const Contract = await hre.ethers.getContractFactory("mutateInterger");
+    const contract = await Contract.deploy(initialValue);
+    await contract.deployed();
 
-// TODO: use async/await everywhere
+    console.log(
+        `Contract intialized at timestamp ${currentTimestampInSeconds}, deployed to ${lock.address}`
+    );
+}
+
+// We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
+main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+});

@@ -13,3 +13,20 @@ It contains three parts:
 git clone https://github.com/yuanxili1/EulithCodeExercise03.git
 cd EulithCodeExercise03
 ```
+
+### Compile the contract
+
+```shell
+npm install
+npx hardhat compile
+```
+
+### Open a local chain
+```
+npx hardhat node
+```
+
+### Create a CLI for Deployment  (Step 2)
+```
+npx hardhat run --network localhost scripts/deploy.js
+```
