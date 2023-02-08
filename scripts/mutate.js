@@ -3,6 +3,7 @@
 //
 
 const hre = require("hardhat");
+const ethers = require("ethers");
 
 // This function will increment the value of the contract
 async function incrementValue(contract) {
@@ -32,12 +33,47 @@ async function decrementValue(contract) {
     console.log("Value after  decrement:", newValue.toNumber());
 }
 
+// Function to get the current time
+async function getCurrentTime() {
+    // Get formatted time
+    // Will display time in 10:30:23 format
+    var date = new Date(Date.now());
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    return formattedTime;
+}
+
 async function main() {
-    // Todo: 
-    // 1. Get the contract address from the command line
-    // 2. Get the contract instance from the address
-    // 3. Call incrementValue and decrementValue
-    // 4. Reset the status of the contract to the initial value
+    // Get formatted time
+    // Will display time in 10:30:23 format
+    var formattedTime = await getCurrentTime();
+
+    // We retrieve the contract
+    const contractAbi = [
+        "function incrementValue()",
+        "function decrementValue()",
+        "function getValue() view returns (uint256)",
+    ];
+    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+    const provider = new ethers.providers.JsonRpcProvider();
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, contractAbi, signer);
+    // const contract = new ethers.Contract(contractAddress, contractAbi, provider);
+    
+    // Print the contract address
+    console.log(
+        `Contract intialized at timestamp ${formattedTime}, deployed to ${contract.address}`
+    );
+
+    // Increment and decrement the value of the contract
+    await incrementValue(contract);
+    console.log("===============");
+    await incrementValue(contract);
+    console.log("===============");
+    await decrementValue(contract);
 
 }
 
