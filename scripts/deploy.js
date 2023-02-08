@@ -4,18 +4,34 @@
 // Import hardhat
 const hre = require("hardhat");
 
-async function main() {
-    // Record the current timestamp
-    const currentTimestampInSeconds = Math.round(Date.now() / 1000);
+// Function to get the current time
+async function getCurrentTime() {
+    // Get formatted time
+    // Will display time in 10:30:23 format
+    var date = new Date(Date.now());
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-    // We get the contract to deploy
+    return formattedTime;
+}
+
+
+async function main() {
+   // Get formatted time
+   // Will display time in 10:30:23 format
+    var formattedTime = await getCurrentTime();
+
+   // We get the contract to deploy
     const initialValue = 256;
     const Contract = await hre.ethers.getContractFactory("mutateInterger");
     const contract = await Contract.deploy(initialValue);
     await contract.deployed();
 
+    // Print the contract address
     console.log(
-        `Contract intialized at timestamp ${currentTimestampInSeconds}, deployed to ${lock.address}`
+        `Contract intialized at timestamp ${formattedTime}, deployed to ${contract.address}`
     );
 }
 

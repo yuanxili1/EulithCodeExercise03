@@ -27,6 +27,9 @@ npx hardhat node
 ```
 
 ### Create a CLI for Deployment  (Step 2)
+1. Deploy the contract TO A LOCAL CHAIN (again, not real ETH).
+2. Monitor the results of the action from console
+3. Reset the contract to a neutral state (the state before the action)
 ```
-npx hardhat run --network localhost scripts/deploy.js
+npx hardhat run --network localhost scripts/reset.js
 ```
